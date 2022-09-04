@@ -20,7 +20,7 @@ const isAdminOrSuperAdmin = (req, res, next) => {
   token = token.split(" ")[1];
   if (token) {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    if (decodedToken.role !== "admin" || decodedToken.role !== "superAdmin") {
+    if (decodedToken.role !== "admin" && decodedToken.role !== "superAdmin") {
       return res.status(403).json({ error: "Admin or SuperAdmin resource! Access denied!" });
     }
   }

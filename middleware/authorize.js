@@ -3,14 +3,10 @@ const jwt = require("jsonwebtoken");
 
 //user if user has token and verify the token
 const verifyToken = (req, res, next) => {
-  let dateNow = new Date()
   let token = req.headers["authorization"] || "";
   token = token.split(" ")[1];
   if (token) {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-    if (decodedToken.exp < dateNow.getTime() / 1000) {
-      res.status(401).json({ message: 'Token expired' });
-    }
     req.user = decodedToken.id;
     next();
   } else {

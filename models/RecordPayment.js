@@ -2,8 +2,7 @@ const { Schema, model } = require('mongoose')
 
 const recordPaymentSchema = new Schema({
     appartment: {
-        type: Schema.Types.ObjectId,
-        ref: 'Appartment',
+        type: String,
         required: true,
     },
     amount: {
@@ -27,8 +26,7 @@ const recordPaymentSchema = new Schema({
         required: true,
     },
     recordedBy: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+        type: String,
         required: true,
     }
 }, { timestamps: true })

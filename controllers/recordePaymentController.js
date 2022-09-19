@@ -24,7 +24,7 @@ const createRecordPayment = async (req, res) => {
             recordedBy
         });
         if (recordPayment) {
-            res.status(201).json({ error: null, data: recordPayment })
+            res.status(201).json({ data: recordPayment })
         }
     } catch (error) {
         console.log(error)

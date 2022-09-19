@@ -40,7 +40,7 @@ const signin = async (req, res, next) => {
         if (!isMatch) {
             res.status(400).json({ message: 'Invalide Credenntials' })
         }
-        const accessToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+        const accessToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: "12h" });
         const refreshToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "336h" });
         res.status(200).json({ accessToken, user, refreshToken })
     } catch (err) {
@@ -50,19 +50,24 @@ const signin = async (req, res, next) => {
 
 const refreshToken = (req, res) => {
     try {
-        const rf_token = req.cookies.refreshToken;
+        const rf_token = req.body.refreshToken;
         if (!rf_token)
             return res.status(400).json({ message: "Please Login or Register" });
 
         jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
             if (err) return res.status(400).json({ message: "Please Login or Register" });
-            const accesstoken = createAccessToken({ id: user._id });
+            const accesstoken = createAccessToken(user.id, user.role, user.email);
             res.json({ accesstoken });
         });
     } catch (err) {
         return res.status(500).json({ message: err });
     }
 };
+
+const createAccessToken = (userId, userRole, userEmail) => {
+    const accessToken = jwt.sign({ id: userId, role: userRole, email: userEmail }, process.env.JWT_SECRET, { expiresIn: "12h" });
+    return accessToken
+}
 
 const signout = async (req, res) => {
     try {

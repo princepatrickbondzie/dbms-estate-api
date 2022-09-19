@@ -40,8 +40,8 @@ const signin = async (req, res, next) => {
         if (!isMatch) {
             res.status(400).json({ message: 'Invalide Credenntials' })
         }
-        const accessToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: "24h" });
-        const refreshToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "336h" });
+        const accessToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.JWT_SECRET, { expiresIn: "7d" });
+        const refreshToken = jwt.sign({ id: user._id, role: user.role, email: user.email }, process.env.REFRESH_TOKEN_SECRET, { expiresIn: "30d" });
         res.status(200).json({ accessToken, user, refreshToken })
     } catch (err) {
         console.log(err)
@@ -65,7 +65,7 @@ const refreshToken = (req, res) => {
 };
 
 const createAccessToken = (userId, userRole, userEmail) => {
-    const accessToken = jwt.sign({ id: userId, role: userRole, email: userEmail }, process.env.JWT_SECRET, { expiresIn: "24h" });
+    const accessToken = jwt.sign({ id: userId, role: userRole, email: userEmail }, process.env.JWT_SECRET, { expiresIn: "7d" });
     return accessToken
 }
 

@@ -1,4 +1,5 @@
 const RecordPayment = require('../models/RecordPayment')
+const Appartment = require('../models/Appartment')
 
 const getRecordPayments = async (req, res, next) => {
     const recordPayments = await RecordPayment.find()
@@ -24,8 +25,16 @@ const createRecordPayment = async (req, res) => {
             recordedBy
         });
         if (recordPayment) {
-            res.status(201).json({ data: recordPayment })
+            await Appartment.findOneAndUpdate(appartment, {
+                $push: {
+                    recordPayments: {
+                        $each: [recordPayment],
+                        $position: 0
+                    }
+                }
+            }, { new: true })
         }
+        res.status(201).json({ data: recordPayment })
     } catch (error) {
         console.log(error)
     }

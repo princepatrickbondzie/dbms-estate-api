@@ -22,8 +22,9 @@ const recordPaymentSchema = new Schema({
         required: true,
     },
     monthDue: {
-        type: String,
+        type: Array,
         required: true,
+        default: [],
     },
     recordedBy: {
         type: String,

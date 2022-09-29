@@ -53,7 +53,13 @@ const updateRecordPayment = async (req, res) => {
 const deleteRecordPayment = async (req, res) => {
     try {
         const id = req.params.id;
-        await RecordPayment.findByIdAndDelete(id)
+        const rp = await RecordPayment.findById(id)
+        if (rp) {
+            const appt = await Appartment.findOne({ houseNumber: rp.appartment })
+            await Appartment.updateOne({ _id: appt._id }, { $pull: { recordPayments: { _id: id } } })
+            await RecordPayment.findByIdAndDelete(id)
+        }
+
         res.status(200).json({ error: null, msg: 'Payment Record deleted successfully' })
     } catch (error) {
         console.log(error)

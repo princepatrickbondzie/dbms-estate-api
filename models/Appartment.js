@@ -24,6 +24,11 @@ const appartmentSchema = new Schema({
         type: String,
         required: true,
     },
+    status: {
+        type: String,
+        enum: ['active', 'inActive'],
+        default: 'active',
+    }
     // recordPayments: {
     //     type: Array,
     //     default: [],

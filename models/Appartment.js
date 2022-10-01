@@ -24,10 +24,10 @@ const appartmentSchema = new Schema({
         type: String,
         required: true,
     },
-    recordPayments: {
-        type: Array,
-        default: [],
-    }
+    // recordPayments: {
+    //     type: Array,
+    //     default: [],
+    // }
 }, { timestamps: true })
 
 module.exports = model('Appartment', appartmentSchema)

@@ -24,19 +24,19 @@ const createRecordPayment = async (req, res) => {
             monthDue,
             recordedBy
         });
-        if (recordPayment) {
-            await Appartment.findOneAndUpdate(appartment, {
-                $push: {
-                    recordPayments: {
-                        $each: [recordPayment],
-                        $position: 0
-                    }
-                }
-            }, { new: true })
-        }
-        res.status(201).json({ data: recordPayment })
+        // if (recordPayment) {
+        //     await Appartment.findOneAndUpdate(appartment, {
+        //         $push: {
+        //             recordPayments: {
+        //                 $each: [recordPayment],
+        //                 $position: 0
+        //             }
+        //         }
+        //     }, { new: true })
+        // }
+        res.status(201).json({ recordPayment })
     } catch (error) {
-        console.log(error)
+        res.status(400).json({ error: error })
     }
 }
 
@@ -53,13 +53,7 @@ const updateRecordPayment = async (req, res) => {
 const deleteRecordPayment = async (req, res) => {
     try {
         const id = req.params.id;
-        const rp = await RecordPayment.findById(id)
-        if (rp) {
-            const appt = await Appartment.findOne({ houseNumber: rp.appartment })
-            await Appartment.updateOne({ _id: appt._id }, { $pull: { recordPayments: { _id: id } } })
-            await RecordPayment.findByIdAndDelete(id)
-        }
-
+        await RecordPayment.findByIdAndDelete(id)
         res.status(200).json({ error: null, msg: 'Payment Record deleted successfully' })
     } catch (error) {
         console.log(error)

@@ -11,7 +11,11 @@ const expenseSchema = new Schema({
         required: true,
         trim: true,
     },
-    amount: {
+    unitPrice: {
+        type: Number,
+        required: true,
+    },
+    totalAmount: {
         type: Number,
         required: true,
     },

@@ -13,15 +13,15 @@ const getExpense = async (req, res) => {
 
 const createExpense = async (req, res) => {
     try {
-        const { item, quantity, amount, user } = req.body;
+        const { item, quantity, unitPrice, totalAmount, user } = req.body;
         const expense = await Expense.create({
             item,
             quantity,
-            amount,
+            unitPrice,
+            totalAmount,
             user
         });
         if (expense) {
-            // console.log(expense)
             res.status(201).json({ expense })
         }
     } catch (error) {

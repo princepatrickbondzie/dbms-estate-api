@@ -10,6 +10,7 @@ const blockRoutes = require('./routes/blockRoutes')
 const appartmentRoutes = require('./routes/appartmentRoutes')
 const recordPaymentRoutes = require('./routes/recordPaymentRoutes')
 const expenseRoutes = require('./routes/expenseRoutes')
+const smsRoutes = require('./routes/smsRoutes')
 
 app.use(express.json())
 app.use(cors())
@@ -20,5 +21,6 @@ app.use('/api/v1/block', blockRoutes)
 app.use('/api/v1/appartment', appartmentRoutes)
 app.use('/api/v1/record-payment', recordPaymentRoutes)
 app.use('/api/v1/expense', expenseRoutes)
+app.use('/api/v1/sms', smsRoutes);
 
 app.listen(9500, () => console.log('listening...'))
